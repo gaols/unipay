@@ -6,6 +6,8 @@ import com.github.gaols.unipay.wxpay.adapter.DefaultAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 /**
  * @author gaols
  */
@@ -35,6 +37,11 @@ public class WxUnipayService implements UnipayService {
     @Override
     public void cancelOrder(String outTradeNo, MchInfo mchInfo) {
         proxy.cancelOrder(outTradeNo, mchInfo);
+    }
+
+    @Override
+    public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
+        return false;
     }
 
     private WxUnipayService() {

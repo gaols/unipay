@@ -4,6 +4,8 @@ import com.github.gaols.unipay.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
+
 public class DefaultAdapter implements UnipayService {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultAdapter.class);
@@ -20,6 +22,11 @@ public class DefaultAdapter implements UnipayService {
 
     @Override
     public void cancelOrder(String outTradeNo, MchInfo mchInfo) {
+        throw new UnsupportedOperationException(msg());
+    }
+
+    @Override
+    public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
         throw new UnsupportedOperationException(msg());
     }
 

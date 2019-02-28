@@ -1,5 +1,7 @@
 package com.github.gaols.unipay.api;
 
+import java.util.Map;
+
 /**
  * @author gaols
  */
@@ -30,4 +32,6 @@ public interface UnipayService {
      * @param mchInfo    商户信息
      */
     void cancelOrder(String outTradeNo, MchInfo mchInfo);
+
+    boolean checkSign(Map<String, String> params, String signType, String mchKey);
 }

@@ -2,6 +2,8 @@ package com.github.gaols.unipay.core;
 
 import com.github.gaols.unipay.api.*;
 
+import java.util.Map;
+
 /**
  * 默认实现是抛出异常，以提示API使用者使用正确的实现。
  */
@@ -22,6 +24,11 @@ public class DefaultUnifyOrderService implements UnipayService {
     @Override
     public void cancelOrder(String outTradeNo, MchInfo mchInfo) {
         throw new IllegalStateException("unknown out trade no");
+    }
+
+    @Override
+    public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
+        throw new UnsupportedOperationException();
     }
 
     public DefaultUnifyOrderService(String payType) {

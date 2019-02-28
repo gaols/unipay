@@ -119,6 +119,11 @@ public class WeixinPopularAdapter implements UnipayService {
         logger.error(String.format("cancel order[%s] with resp.status[%s]", outTradeNo, mchBaseResult.getResult_code()));
     }
 
+    @Override
+    public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
+        return false;
+    }
+
     private static boolean isAllSuccess(String... values) {
         for (String v : values) {
             if (!"SUCCESS".equals(v)) {

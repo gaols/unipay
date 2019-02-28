@@ -96,6 +96,11 @@ public class AlipayUnipayService implements UnipayService {
         logger.error(String.format("cancel order[%s] with action=%s,retry_flag=%s", outTradeNo, resp.getAction(), resp.getRetryFlag()));
     }
 
+    @Override
+    public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
+        return false;
+    }
+
     public static UnipayService create() {
         return orderService;
     }
