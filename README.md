@@ -5,12 +5,7 @@
 
 ## 简单之道
 
-**10行代码**就生成了二维码内容（字符串），将这个字符串传到网站页面，使用一个二维码js库就可以生成
-一个支付二维码。
-
-> 不知道二维码js库？[戳这里看看！](https://github.com/davidshimjs/qrcodejs)
-
-### 1.支付宝支付
+### 支付宝支付
 ```java
 UnipayService service = UniPayServiceFactory.getUnipayService(PayType.alipay); // 使用微信支付使用PayType.wx
 
@@ -20,7 +15,7 @@ order.setOutTradeNo("Q12345678923"); // 订单号
 order.setTotalFee(100);  // 支付金额，单位为分
 
 OrderContext context = new OrderContext();
-context.setNotifyUrl("http://www.youdomain/xyz/pay/notify/alipay");
+context.setNotifyUrl("http://www.youdomain/xyz/pay/notify/alipay"); // 接收支付回调的url
 
 // 如果是微信支付，那么使用MchInfo.create(PayType.wx, "wx.properties")
 PushOrderResult result = service.unifyOrder(context, order, MchInfo.create(PayType.alipay, "zfb_test.properties"));
@@ -30,10 +25,20 @@ if (result.isOk()) {
 }
 ```
 
+**10行代码**就生成了二维码内容（字符串），将这个字符串传到网站页面，使用一个二维码js库就可以生成
+一个支付二维码。
+
+> 不知道二维码js库？[戳这里看看！](https://github.com/davidshimjs/qrcodejs)
 > 统一接口，用起来是不是方便，而且只需要短短的10来行代码！是很真的吗？先看完魔鬼细节再说吧！
 
-## 魔鬼细节
+### 魔鬼细节
 
-## 最佳实践
+1. `MchInfo.create(PayType.alipay, "zfb_test.properties")`有什么特别？
 
-## 使用说明
+zfb_test.properties是什么？这个简单，当然是支付宝账户的配置信息。那么这个配置文件应该放哪？当然可以放在项目中的任何地方，只要你的代码可以
+访问即可，但为了方便，推荐放在`src/main/resources`目录下，`MchInfo.create(...)`会根据支付方式方式的不同自动创建不同的账户配置实例：
+支付宝对应的`AlipayMchInfo`,微信对应的是`WxMchInfo`。如果不嫌麻烦，当然可以根据不同的支付类型，手动实例化`AlipayMchInfo`和`WxMchInfo`。
+
+还有一个需要强调的是，`MchInfo.create(...)`对配置文件的具体格式是有要求的。这个很容易理解，配置文件不可能随便写。那么配置文件究竟怎么写？
+直接拷贝本项目目录sample子目录下的配置文件，然后将里面的配置信息改成实际的值即可。
+
