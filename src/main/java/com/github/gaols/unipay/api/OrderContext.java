@@ -14,10 +14,6 @@ public class OrderContext {
      */
     private HttpServletRequest request;
     /**
-     * 商户操作员编号。
-     */
-    private String operatorId;
-    /**
      * 支付超时时间。
      */
     private String payTimeout;
@@ -26,6 +22,9 @@ public class OrderContext {
      */
     private String notifyUrl;
 
+
+    public OrderContext() {
+    }
 
     public OrderContext(HttpServletRequest request) {
         this.request = request;
@@ -38,14 +37,6 @@ public class OrderContext {
      */
     public String getPayerIp() {
         return request == null ? "120.210.205.42" : IpUtils.getRealIp(request);
-    }
-
-    public String getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(String operatorId) {
-        this.operatorId = operatorId;
     }
 
     /**

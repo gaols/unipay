@@ -5,7 +5,6 @@ import com.alipay.impl.liuyangkly.model.builder.AlipayTradePrecreateRequestBuild
 import com.github.gaols.unipay.api.LineItem;
 import com.github.gaols.unipay.api.Order;
 import com.github.gaols.unipay.api.OrderContext;
-import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -33,10 +32,6 @@ public class AlipayUnifyOrderRequestBuilder {
                 .setDiscountableAmount(convertTotalAmount(order.getTotalFee()))
                 .setNotifyUrl(context.getNotifyUrl())
                 .setTimeoutExpress(context.getPayTimeout());
-
-        if (StringUtils.isNotBlank(context.getOperatorId())) {
-            builder.setOperatorId(context.getOperatorId());
-        }
 
         List<GoodsDetail> goodDetailsList = createGoodDetailsList(order.getLineItemList());
         if (goodDetailsList != null && !goodDetailsList.isEmpty()) {

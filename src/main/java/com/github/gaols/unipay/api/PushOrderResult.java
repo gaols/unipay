@@ -22,6 +22,18 @@ public class PushOrderResult {
         return response;
     }
 
+    public boolean isOk() {
+        return PushOrderStatus.SUCCESS == this.pushOrderStatus;
+    }
+
+    public String getQrCodeContent() {
+        return (String) response.get("qr_code_url");
+    }
+
+    public String getOutTradeNo() {
+        return (String) response.get("out_trade_no");
+    }
+
     public void setResponse(Map<String, Object> response) {
         this.response = response;
     }
