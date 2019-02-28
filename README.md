@@ -42,3 +42,31 @@ zfb_test.properties是什么？这个简单，当然是支付宝账户的配置�
 还有一个需要强调的是，`MchInfo.create(...)`对配置文件的具体格式是有要求的。这个很容易理解，配置文件不可能随便写。那么配置文件究竟怎么写？
 直接拷贝本项目目录sample子目录下的配置文件，然后将里面的配置信息改成实际的值即可。
 
+## 使用说明
+
+如果要支持支付宝支付，需要引入`alipay-sdk-java`。
+
+```xml
+<dependency>
+    <groupId>com.alipay.sdk</groupId>
+    <artifactId>alipay-sdk-java</artifactId>
+    <version>3.6.0.ALL</version>
+</dependency>
+```
+
+如果要支持微信支付，需要引入`weixin-java-pay`或者`weixin-popular`。二选一即可！
+
+```xml
+<dependency>
+    <groupId>com.github.liyiorg</groupId>
+    <artifactId>weixin-popular</artifactId>
+    <version>2.8.10</version>
+</dependency>
+
+<!-- 或者 -->
+<dependency>
+    <groupId>com.github.binarywang</groupId>
+    <artifactId>weixin-java-pay</artifactId>
+    <version>3.2.0</version>
+</dependency>
+```
