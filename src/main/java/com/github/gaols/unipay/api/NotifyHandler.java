@@ -11,4 +11,6 @@ public interface NotifyHandler {
     String generateResult(boolean handleResult);
 
     PayNotifyParser getPayNotifyParser(HttpServletRequest request);
+
+    String handle(HttpServletRequest request, MchInfo mchInfo, PayNotifyCallback callback);
 }

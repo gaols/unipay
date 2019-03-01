@@ -1,13 +1,13 @@
 package com.github.gaols.unipay.wxpay;
 
-import com.github.gaols.unipay.api.NotifyHandler;
+import com.github.gaols.unipay.api.PayNotifyBaseHandler;
 import com.github.gaols.unipay.api.PayNotifyParser;
 import weixin.popular.bean.paymch.MchBaseResult;
 import weixin.popular.util.XMLConverUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class WxNotifyHandler implements NotifyHandler {
+public class WxNotifyHandler extends PayNotifyBaseHandler {
 
     @Override
     public String generateResult(boolean handleResult) {
