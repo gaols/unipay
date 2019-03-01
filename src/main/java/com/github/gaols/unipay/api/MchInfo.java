@@ -24,6 +24,7 @@ public abstract class MchInfo {
                 wxMchInfo.setAppId(prop.get("app_id"));
                 wxMchInfo.setMchKey(prop.get("mch_key")); // api key
                 wxMchInfo.setMchId(prop.get("mch_id"));
+                wxMchInfo.setKeyPath(prop.get("key_path")); // 退款证书路径
                 wxMchInfo.validate();
                 return wxMchInfo;
             case alipay:

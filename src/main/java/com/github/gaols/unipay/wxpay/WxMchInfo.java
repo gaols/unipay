@@ -10,6 +10,10 @@ public class WxMchInfo extends MchInfo {
     private String mchKey;
     private String appId;
     private String mchId;
+    /**
+     * 微信退款必须参数，可到商户中心下载，然后放到项目的classpath下。
+     */
+    private String keyPath;
     private String signType = "MD5";
 
     public String getMchKey() {
@@ -42,6 +46,14 @@ public class WxMchInfo extends MchInfo {
 
     public void setSignType(String signType) {
         this.signType = signType;
+    }
+
+    public String getKeyPath() {
+        return keyPath;
+    }
+
+    public void setKeyPath(String keyPath) {
+        this.keyPath = keyPath;
     }
 
     @Override

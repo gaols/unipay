@@ -3,8 +3,10 @@ package com.github.gaols.unipay.wxpay.adapter;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.WxPayOrderCloseRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayOrderQueryRequest;
+import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
+import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -84,7 +86,36 @@ public class WxJavaPayAdapter implements UnipayService {
 
     @Override
     public RefundResult refund(RefundRequest request, MchInfo mchInfo) {
-        return null;
+        WxRefundResult ret = new WxRefundResult();
+        try {
+            WxPayRefundResult result = payService(mchInfo).refund(createRefundRequest(request));
+            if ("SUCCESS".equals(result.getResultCode())) {
+                ret.setTradeStatus(TradeStatus.SUCCESS);
+            } else if ("FAIL".equals(result.getResultCode())) {
+                ret.setTradeStatus(TradeStatus.PAYERROR);
+            } else {
+                ret.setTradeStatus(TradeStatus.UNKNOWN);
+            }
+
+            ret.setResultCode(result.getResultCode());
+            ret.setErrCode(result.getErrCode());
+            ret.setErrCodeDes(result.getErrCodeDes());
+            ret.setTransactionId(result.getTransactionId());
+            ret.setOutTradeNo(result.getOutTradeNo());
+            ret.setOutRefundNo(result.getOutRefundNo());
+            ret.setRefundId(result.getRefundId());
+            ret.setRefundFee(result.getRefundFee());
+            ret.setSettlementRefundFee(result.getSettlementRefundFee());
+            ret.setTotalFee(result.getTotalFee());
+            ret.setSettlementTotalFee(result.getSettlementTotalFee());
+            ret.setFeeType(result.getFeeType());
+            ret.setCashFee(result.getCashFee());
+            ret.setCashFeeType(result.getCashFeeType());
+            ret.setCashRefundFee(result.getCashRefundFee());
+        } catch (WxPayException e) {
+            ret.setTradeStatus(TradeStatus.UNKNOWN);
+        }
+        return ret;
     }
 
     private WxPayUnifiedOrderRequest createWxPayUnifiedOrderRequest(OrderContext context, Order order) {
@@ -109,6 +140,7 @@ public class WxJavaPayAdapter implements UnipayService {
         payConfig.setMchKey(info.getMchKey());
         payConfig.setSignType(info.getSignType());
         payConfig.setTradeType("NATIVE");
+        payConfig.setKeyPath(info.getKeyPath());
         WxPayService wxPayService = new WxPayServiceImpl();
         wxPayService.setConfig(payConfig);
         return wxPayService;
@@ -143,6 +175,17 @@ public class WxJavaPayAdapter implements UnipayService {
         }
 
         return goodDetailList;
+    }
+
+    private WxPayRefundRequest createRefundRequest(RefundRequest request) {
+        WxPayRefundRequest.WxPayRefundRequestBuilder refundRequest = WxPayRefundRequest.newBuilder();
+        refundRequest.transactionId(request.getTransactionId());
+        refundRequest.refundFee(request.getRefundFee());
+        refundRequest.totalFee(request.getTotalFee());
+        refundRequest.outRefundNo(request.getOutRequestNo()); // 退款单号以R开头
+        refundRequest.outTradeNo(request.getOutTradeNo()); // 退款单号以R开头
+        refundRequest.notifyUrl(request.getNotifyUrl());
+        return refundRequest.build();
     }
 
 }

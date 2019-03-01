@@ -9,16 +9,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weixin.popular.api.PayMchAPI;
 import weixin.popular.bean.paymch.*;
+import weixin.popular.client.LocalHttpClient;
 import weixin.popular.util.SignatureUtil;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class WeixinPopularAdapter implements UnipayService {
 
     private static final Logger logger = LoggerFactory.getLogger(WeixinPopularAdapter.class);
+    private static boolean keyInit;
+    private static ReentrantLock lock = new ReentrantLock();
 
     @Override
     public PushOrderResult unifyOrder(OrderContext context, Order order, MchInfo mchInfo) {
@@ -127,7 +133,63 @@ public class WeixinPopularAdapter implements UnipayService {
 
     @Override
     public RefundResult refund(RefundRequest request, MchInfo mchInfo) {
-        return null;
+        WxMchInfo info = (WxMchInfo) mchInfo;
+        initKeyStore(info);
+        SecapiPayRefund refund = new SecapiPayRefund();
+        refund.setOut_refund_no(request.getOutRequestNo());
+        refund.setOut_trade_no(request.getOutTradeNo());
+        refund.setTransaction_id(request.getTransactionId());
+        refund.setRefund_fee(request.getRefundFee());
+        refund.setTotal_fee(request.getTotalFee());
+        refund.setNotify_url(request.getNotifyUrl());
+        SecapiPayRefundResult result = PayMchAPI.secapiPayRefund(refund, info.getMchKey());
+        WxRefundResult ret = new WxRefundResult();
+
+        if ("SUCCESS".equals(result.getResult_code())) {
+            ret.setTradeStatus(TradeStatus.SUCCESS);
+        } else if ("FAIL".equals(result.getResult_code())) {
+            ret.setTradeStatus(TradeStatus.PAYERROR);
+        } else {
+            ret.setTradeStatus(TradeStatus.UNKNOWN);
+        }
+
+        ret.setResultCode(result.getResult_code());
+        ret.setErrCode(result.getErr_code());
+        ret.setErrCodeDes(result.getErr_code_des());
+        ret.setTransactionId(result.getTransaction_id());
+        ret.setOutTradeNo(result.getOut_trade_no());
+        ret.setOutRefundNo(result.getOut_refund_no());
+        ret.setRefundId(result.getRefund_id());
+        ret.setRefundFee(result.getRefund_fee());
+        ret.setSettlementRefundFee(result.getSettlement_refund_fee());
+        ret.setTotalFee(result.getTotal_fee());
+        ret.setSettlementTotalFee(result.getSettlement_total_fee());
+        ret.setFeeType(result.getFee_type());
+        ret.setCashFee(result.getCash_fee());
+        ret.setCashRefundFee(String.valueOf(result.getCash_refund_fee()));
+
+        return ret;
+    }
+
+    private void initKeyStore(WxMchInfo info) {
+        lock.lock();
+        InputStream stream = null;
+        try {
+            if (!keyInit) {
+                stream = getClass().getClassLoader().getResourceAsStream(info.getKeyPath());
+                LocalHttpClient.initMchKeyStore(info.getMchId(), stream);
+                keyInit = true;
+            }
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    //
+                }
+            }
+            lock.unlock();
+        }
     }
 
     private static boolean isAllSuccess(String... values) {
