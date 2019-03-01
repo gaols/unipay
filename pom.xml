@@ -36,6 +36,9 @@
             <name>gaols</name>
             <email>igaols@foxmail.com</email>
         </developer>
+        <developer>
+            <name>liuyangkly</name>
+        </developer>
     </developers>
 
     <scm>
