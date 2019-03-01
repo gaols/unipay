@@ -2,10 +2,10 @@ package com.github.gaols.unipay.wxpay;
 
 import com.github.gaols.unipay.api.MchInfo;
 import com.github.gaols.unipay.api.PayNotifyParser;
+import com.github.gaols.unipay.core.WxVendor;
 import com.github.gaols.unipay.utils.IOUtils;
 import com.github.gaols.unipay.utils.ParaUtils;
 import com.github.gaols.unipay.utils.XmlUtils;
-import com.github.gaols.unipay.utils.sign.WxSignCheckUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +53,7 @@ public class WxPayNotifyParser implements PayNotifyParser {
     @Override
     public boolean isSignValid(MchInfo mchInfo) {
         WxMchInfo info = (WxMchInfo) mchInfo;
-        return WxSignCheckUtils.signCheck(parasMap, info.getSignType(), info.getMchKey());
+        return WxVendor.getProxy().checkSign(this.parasMap, info.getSignType(), info.getMchKey());
     }
 
     @Override

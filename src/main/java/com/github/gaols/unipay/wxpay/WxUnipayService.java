@@ -2,7 +2,6 @@ package com.github.gaols.unipay.wxpay;
 
 import com.github.gaols.unipay.api.*;
 import com.github.gaols.unipay.core.WxVendor;
-import com.github.gaols.unipay.wxpay.adapter.DefaultAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,30 +40,11 @@ public class WxUnipayService implements UnipayService {
 
     @Override
     public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
-        return false;
+        return proxy.checkSign(params, signType, mchKey);
     }
 
     private WxUnipayService() {
-        tryProxy("weixin.popular.bean.paymch.Unifiedorder", "com.github.gaols.unipay.wxpay.adapter.WeixinPopularAdapter", WxVendor.TYPE_weixin_popular);
-        tryProxy("com.github.binarywang.wxpay.service.WxPayService", "com.github.gaols.unipay.wxpay.adapter.WxJavaPayAdapter", WxVendor.TYPE_WxJava);
-        if (proxy == null) {
-            proxy = new DefaultAdapter();
-        }
-    }
-
-    private void tryProxy(String clazz, String proxy, String vendorType) {
-        if (this.proxy == null) {
-            try {
-                Class.forName(clazz);
-                this.proxy = (UnipayService) Class.forName(proxy).newInstance();
-                WxVendor.vendorType = vendorType;
-                logger.info("{} detected", clazz);
-            } catch (ClassNotFoundException e) {
-                logger.info("{} not in classpath", clazz);
-            } catch (IllegalAccessException | InstantiationException e) {
-                logger.error("instantiate proxy error", e);
-            }
-        }
+        this.proxy = WxVendor.getProxy();
     }
 
     public static WxUnipayService create() {

@@ -9,6 +9,7 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
+import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.gaols.unipay.api.*;
 import com.github.gaols.unipay.core.PushOrderStatus;
 import com.github.gaols.unipay.core.TradeStatusTranslator;
@@ -78,7 +79,7 @@ public class WxJavaPayAdapter implements UnipayService {
 
     @Override
     public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
-        return false;
+        return SignUtils.checkSign(params, signType, mchKey);
     }
 
     private WxPayUnifiedOrderRequest createWxPayUnifiedOrderRequest(OrderContext context, Order order) {

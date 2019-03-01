@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weixin.popular.api.PayMchAPI;
 import weixin.popular.bean.paymch.*;
+import weixin.popular.util.SignatureUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,7 +122,7 @@ public class WeixinPopularAdapter implements UnipayService {
 
     @Override
     public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
-        return false;
+        return SignatureUtil.validateSign(params, signType, mchKey);
     }
 
     private static boolean isAllSuccess(String... values) {

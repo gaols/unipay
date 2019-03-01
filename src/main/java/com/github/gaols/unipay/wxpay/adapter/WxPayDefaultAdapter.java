@@ -1,14 +1,10 @@
 package com.github.gaols.unipay.wxpay.adapter;
 
 import com.github.gaols.unipay.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class DefaultAdapter implements UnipayService {
-
-    private static final Logger logger = LoggerFactory.getLogger(DefaultAdapter.class);
+public class WxPayDefaultAdapter implements UnipayService {
 
     @Override
     public PushOrderResult unifyOrder(OrderContext context, Order order, MchInfo mchInfo) {

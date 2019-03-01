@@ -1,5 +1,7 @@
 package com.github.gaols.unipay.alipay;
 
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.response.AlipayTradeCancelResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.impl.liuyangkly.model.builder.AlipayTradeCancelRequestBuilder;
@@ -97,8 +99,13 @@ public class AlipayUnipayService implements UnipayService {
     }
 
     @Override
-    public boolean checkSign(Map<String, String> params, String signType, String mchKey) {
-        return false;
+    public boolean checkSign(Map<String, String> params, String signType, String alipayPubicKey) {
+        try {
+            return AlipaySignature.rsaCheckV1(params, alipayPubicKey, "UTF-8", signType);
+        } catch (AlipayApiException e) {
+            logger.error("sign check failed", e);
+            throw new RuntimeException(e);
+        }
     }
 
     public static UnipayService create() {
