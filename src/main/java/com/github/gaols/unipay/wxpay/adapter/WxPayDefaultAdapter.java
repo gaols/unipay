@@ -27,7 +27,7 @@ public class WxPayDefaultAdapter implements UnipayService {
     }
 
     @Override
-    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
+    public RefundResult refund(RefundRequest request, MchInfo mchInfo) {
         throw new UnsupportedOperationException(msg());
     }
 

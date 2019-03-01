@@ -44,8 +44,8 @@ public class WxUnipayService implements UnipayService {
     }
 
     @Override
-    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
-        return null;
+    public RefundResult refund(RefundRequest request, MchInfo mchInfo) {
+        return proxy.refund(request, mchInfo);
     }
 
     private WxUnipayService() {

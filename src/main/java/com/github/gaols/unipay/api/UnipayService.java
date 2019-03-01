@@ -39,7 +39,7 @@ public interface UnipayService {
     boolean checkSign(Map<String, String> params, String signType, String mchKey);
 
     /**
-     * 退款，退款要求证书必须配置。
+     * 退款。
      */
-    TradeStatus refund(RefundRequest request, MchInfo mchInfo);
+    RefundResult refund(RefundRequest request, MchInfo mchInfo);
 }

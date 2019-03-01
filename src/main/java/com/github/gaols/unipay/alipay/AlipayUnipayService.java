@@ -4,14 +4,18 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.response.AlipayTradeCancelResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.alipay.impl.liuyangkly.model.builder.AlipayTradeCancelRequestBuilder;
 import com.alipay.impl.liuyangkly.model.builder.AlipayTradePrecreateRequestBuilder;
 import com.alipay.impl.liuyangkly.model.builder.AlipayTradeQueryRequestBuilder;
+import com.alipay.impl.liuyangkly.model.builder.AlipayTradeRefundRequestBuilder;
 import com.alipay.impl.liuyangkly.model.result.AlipayF2FPrecreateResult;
 import com.alipay.impl.liuyangkly.model.result.AlipayF2FQueryResult;
+import com.alipay.impl.liuyangkly.model.result.AlipayF2FRefundResult;
 import com.alipay.impl.liuyangkly.service.impl.AlipayTradeServiceImpl;
 import com.github.gaols.unipay.api.*;
 import com.github.gaols.unipay.core.TradeStatusTranslator;
+import com.github.gaols.unipay.utils.MathUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,8 +113,36 @@ public class AlipayUnipayService implements UnipayService {
     }
 
     @Override
-    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
-        return null;
+    public RefundResult refund(RefundRequest request, MchInfo mchInfo) {
+        AlipayTradeRefundRequestBuilder builder = new AlipayTradeRefundRequestBuilder();
+        builder.setOutTradeNo(request.getOutTradeNo());
+        builder.setRefundAmount(MathUtils.centsToYuan(request.getRefundFee()));
+        builder.setRefundReason(request.getRefundReason());
+        builder.setOutRequestNo(request.getOutRequestNo());
+        builder.setTradeNo(request.getTransactionId());
+
+        AlipayRefundResult ret = new AlipayRefundResult();
+        AlipayF2FRefundResult result = getAlipayTradeServiceImpl(mchInfo).tradeRefund(builder);
+        AlipayTradeRefundResponse response = result.getResponse();
+        if (response != null) {
+            ret.setTradeStatus(TradeStatusTranslator.translateAlipayTradeStatus(result.getTradeStatus()));
+            ret.setBuyerLogonId(response.getBuyerLogonId());
+            ret.setBuyerUserId(response.getBuyerUserId());
+            ret.setFundChange(response.getFundChange());
+            ret.setGmtRefundPay(response.getGmtRefundPay());
+            ret.setOpenId(response.getOpenId());
+            ret.setOutTradeNo(response.getOutTradeNo());
+            ret.setPresentRefundBuyerAmount(response.getPresentRefundBuyerAmount());
+            ret.setPresentRefundDiscountAmount(response.getPresentRefundDiscountAmount());
+            ret.setPresentRefundMdiscountAmount(response.getPresentRefundMdiscountAmount());
+            ret.setRefundCurrency(response.getRefundCurrency());
+            ret.setRefundDetailItemList(response.getRefundDetailItemList());
+            ret.setRefundFee(response.getRefundFee());
+            ret.setSendBackFee(response.getSendBackFee());
+            ret.setStoreName(response.getStoreName());
+            ret.setTradeNo(response.getTradeNo());
+        }
+        return ret;
     }
 
     public static UnipayService create() {
@@ -119,4 +151,5 @@ public class AlipayUnipayService implements UnipayService {
 
     private AlipayUnipayService() {
     }
+
 }
