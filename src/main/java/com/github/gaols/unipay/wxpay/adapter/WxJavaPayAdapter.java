@@ -82,6 +82,11 @@ public class WxJavaPayAdapter implements UnipayService {
         return SignUtils.checkSign(params, signType, mchKey);
     }
 
+    @Override
+    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
+        return null;
+    }
+
     private WxPayUnifiedOrderRequest createWxPayUnifiedOrderRequest(OrderContext context, Order order) {
         WxPayUnifiedOrderRequest orderRequest = new WxPayUnifiedOrderRequest();
         orderRequest.setBody(order.getSubject()); // 商品描述，例如：腾讯充值中心-QQ会员充值，即最好是应用名+商品名

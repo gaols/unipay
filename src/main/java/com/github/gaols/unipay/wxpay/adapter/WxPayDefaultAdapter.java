@@ -26,6 +26,11 @@ public class WxPayDefaultAdapter implements UnipayService {
         throw new UnsupportedOperationException(msg());
     }
 
+    @Override
+    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
+        throw new UnsupportedOperationException(msg());
+    }
+
     private String msg() {
         return "To support weixin pay, you can use either weixin-popular or WxJava";
     }

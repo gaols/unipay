@@ -33,5 +33,13 @@ public interface UnipayService {
      */
     void cancelOrder(String outTradeNo, MchInfo mchInfo);
 
+    /**
+     * 验签。
+     */
     boolean checkSign(Map<String, String> params, String signType, String mchKey);
+
+    /**
+     * 退款，退款要求证书必须配置。
+     */
+    TradeStatus refund(RefundRequest request, MchInfo mchInfo);
 }

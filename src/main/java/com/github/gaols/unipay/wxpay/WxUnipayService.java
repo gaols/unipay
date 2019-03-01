@@ -43,6 +43,11 @@ public class WxUnipayService implements UnipayService {
         return proxy.checkSign(params, signType, mchKey);
     }
 
+    @Override
+    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
+        return null;
+    }
+
     private WxUnipayService() {
         this.proxy = WxVendor.getProxy();
     }

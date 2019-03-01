@@ -125,6 +125,11 @@ public class WeixinPopularAdapter implements UnipayService {
         return SignatureUtil.validateSign(params, signType, mchKey);
     }
 
+    @Override
+    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
+        return null;
+    }
+
     private static boolean isAllSuccess(String... values) {
         for (String v : values) {
             if (!"SUCCESS".equals(v)) {

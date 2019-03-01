@@ -108,6 +108,11 @@ public class AlipayUnipayService implements UnipayService {
         }
     }
 
+    @Override
+    public TradeStatus refund(RefundRequest request, MchInfo mchInfo) {
+        return null;
+    }
+
     public static UnipayService create() {
         return orderService;
     }

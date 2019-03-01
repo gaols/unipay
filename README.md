@@ -6,6 +6,7 @@
 ## 简单之道
 
 ### 支付宝支付
+
 ```java
 UnipayService service = UniPayServiceFactory.getUnipayService(PayType.alipay); // 使用微信支付使用PayType.wx
 
@@ -35,12 +36,18 @@ if (result.isOk()) {
 
 1. `MchInfo.create(PayType.alipay, "zfb_test.properties")`有什么特别？
 
-zfb_test.properties是什么？这个简单，当然是支付宝账户的配置信息。那么这个配置文件应该放哪？当然可以放在项目中的任何地方，只要你的代码可以
-访问即可，但为了方便，推荐放在`src/main/resources`目录下，`MchInfo.create(...)`会根据支付方式方式的不同自动创建不同的账户配置实例：
-支付宝对应的`AlipayMchInfo`,微信对应的是`WxMchInfo`。如果不嫌麻烦，当然可以根据不同的支付类型，手动实例化`AlipayMchInfo`和`WxMchInfo`。
+`zfb_test.properties`是什么？这个简单，当然是支付宝账户的配置信息。那么这个配置文件应该放哪？当然可以放在项目中的任何地方，只要你的代码可以
+访问即可，但为了方便，推荐放在`src/main/resources`目录下。
 
-还有一个需要强调的是，`MchInfo.create(...)`对配置文件的具体格式是有要求的。这个很容易理解，配置文件不可能随便写。那么配置文件究竟怎么写？
-直接拷贝本项目目录sample子目录下的配置文件，然后将里面的配置信息改成实际的值即可。
+`MchInfo.create(...)`会根据支付方式方式的不同自动创建不同的账户配置实例：
+
+* 支付宝对应的`AlipayMchInfo`,
+* 微信对应的是`WxMchInfo`。
+
+如果不嫌麻烦，当然可以根据不同的支付类型，手动实例化`AlipayMchInfo`和`WxMchInfo`。还有一个需要强调的是，`MchInfo.create(...)`对配置文件
+的具体格式是有要求的。这个很容易理解，配置文件不可能随便写。
+
+> 那么配置文件究竟怎么写？直接拷贝本项目目录sample子目录下的配置文件，然后将里面的配置信息改成实际的值即可。
 
 ## 使用说明
 
