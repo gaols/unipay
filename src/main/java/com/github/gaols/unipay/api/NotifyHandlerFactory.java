@@ -8,7 +8,7 @@ import com.github.gaols.unipay.wxpay.WxNotifyHandler;
  */
 public class NotifyHandlerFactory {
 
-    public static NotifyHandler getNotifyHandler(PayType type) {
+    public static PayNotifyHandler getNotifyHandler(PayType type) {
         switch (type) {
             case wx:
                 return new WxNotifyHandler();
@@ -19,7 +19,7 @@ public class NotifyHandlerFactory {
         throw new IllegalArgumentException("unsupported pay type: " + type);
     }
 
-    public static NotifyHandler getNotifyHandler(String type) {
+    public static PayNotifyHandler getNotifyHandler(String type) {
         if (Constants.PAY_TYPE_WX.equals(type)) {
             return new WxNotifyHandler();
         } else if (Constants.PAY_TYPE_ALIPAY.equals(type)) {

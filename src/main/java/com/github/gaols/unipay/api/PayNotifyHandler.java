@@ -2,7 +2,7 @@ package com.github.gaols.unipay.api;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface NotifyHandler {
+public interface PayNotifyHandler {
     /**
      * 返回给微信或者支付宝的处理结果。
      *

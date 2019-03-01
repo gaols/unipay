@@ -3,7 +3,7 @@ package com.github.gaols.unipay.api;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-public abstract class PayNotifyBaseHandler implements NotifyHandler {
+public abstract class PayNotifyBaseHandler implements PayNotifyHandler {
 
     @Override
     public String handle(HttpServletRequest request, MchInfo mchInfo, PayNotifyCallback callback) {
