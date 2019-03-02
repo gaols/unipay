@@ -16,7 +16,7 @@ order.setOutTradeNo("Q12345678923"); // 订单号
 order.setTotalFee(100);  // 支付金额，单位为**分**
 
 OrderContext context = new OrderContext();
-context.setNotifyUrl("http://www.youdomain/pay/notify/alipay"); // 接收支付回调的url
+context.setNotifyUrl("http://www.youdomain/pay/notify/callback"); // 接收支付回调的url
 
 // 如果是微信支付，那么使用MchInfo.create(PayType.wx, "wx.properties")
 PushOrderResult result = service.unifyOrder(context, order, MchInfo.create(PayType.alipay, "zfb_test.properties"));
@@ -62,8 +62,9 @@ if (result.isOk()) {
 ```java
 @RequestMapping("/pay/notify")
 @Controller
-@ResponseBody
 class NotifyController {
+    @RequestMapping("/callback")
+    @ResponseBody
     public String handleNotify(HttpServletRequest request) {
         PayNotifyHandler h = NotifyHandlerFactory.getNotifyHandler(PayType.wx); // 如果是支付宝支付回调使用PayType.alipay
         return h.handle(request, mchInfo, new PayNotifyCallback() {
