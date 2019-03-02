@@ -2,8 +2,7 @@ package com.github.gaols.unipay.wxpay;
 
 import com.github.gaols.unipay.api.PayNotifyBaseHandler;
 import com.github.gaols.unipay.api.PayNotifyParser;
-import weixin.popular.bean.paymch.MchBaseResult;
-import weixin.popular.util.XMLConverUtil;
+import com.github.gaols.unipay.api.WxNotifyResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,11 +10,7 @@ public class WxNotifyHandler extends PayNotifyBaseHandler {
 
     @Override
     public String generateResult(boolean handleResult) {
-        String retCode = handleResult ? "SUCCESS" : "FAIL";
-        MchBaseResult result = new MchBaseResult();
-        result.setReturn_code(retCode);
-        result.setReturn_msg("OK");
-        return XMLConverUtil.convertToXML(result);
+        return handleResult ? WxNotifyResponse.success("OK") : WxNotifyResponse.fail("OK");
     }
 
     @Override
