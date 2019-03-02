@@ -8,15 +8,15 @@
 ### 支付宝支付
 
 ```java
-UnipayService service = UniPayServiceFactory.getUnipayService(PayType.alipay); // 使用微信支付使用PayType.wx
+UnipayService service = UniPayServiceFactory.getUnipayService(PayType.alipay); // 微信支付使用PayType.wx
 
 Order order = new Order();
 order.setSubject("腾讯充值中心-企鹅币充值"); // 商品
 order.setOutTradeNo("Q12345678923"); // 订单号
-order.setTotalFee(100);  // 支付金额，单位为分
+order.setTotalFee(100);  // 支付金额，单位为**分**
 
 OrderContext context = new OrderContext();
-context.setNotifyUrl("http://www.youdomain/xyz/pay/notify/alipay"); // 接收支付回调的url
+context.setNotifyUrl("http://www.youdomain/pay/notify/alipay"); // 接收支付回调的url
 
 // 如果是微信支付，那么使用MchInfo.create(PayType.wx, "wx.properties")
 PushOrderResult result = service.unifyOrder(context, order, MchInfo.create(PayType.alipay, "zfb_test.properties"));
@@ -34,20 +34,50 @@ if (result.isOk()) {
 
 ### 魔鬼细节
 
-1. `MchInfo.create(PayType.alipay, "zfb_test.properties")`有什么特别？
+#### 1. 账号配置细节
 
-`zfb_test.properties`是什么？这个简单，当然是支付宝账户的配置信息。那么这个配置文件应该放哪？当然可以放在项目中的任何地方，只要你的代码可以
-访问即可，但为了方便，推荐放在`src/main/resources`目录下。
+`MchInfo.create(...)`是为了简化配置而写的工具类，内部实现会根据支付方式的不同自动创建不同的账户配置实例：
 
-`MchInfo.create(...)`会根据支付方式方式的不同自动创建不同的账户配置实例：
+* 支付宝对应的[AlipayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/alipay/AlipayMchInfo.java)；
+* 微信对应的是[WxMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/wxpay/WxMchInfo.java)。
 
-* 支付宝对应的`AlipayMchInfo`,
-* 微信对应的是`WxMchInfo`。
+`MchInfo.create(...)`第二个参数是用来接收收款账户的配置信息。支付宝和微信需要的配置文件是不同，为了简便起见，推荐直接拷贝本项目目录下
+*sample*子目录下的配置文件，将里面的配置信息改成实际的值，放到项目的**src/main/resources**目录下。
 
-如果不嫌麻烦，当然可以根据不同的支付类型，手动实例化`AlipayMchInfo`和`WxMchInfo`。还有一个需要强调的是，`MchInfo.create(...)`对配置文件
-的具体格式是有要求的。这个很容易理解，配置文件不可能随便写。
+> `MchInfo.create(...)`工具类只是为了简化配置，如有必要，可以根据支付类型的不同手动实例化不同的配置实例。
 
-> 那么配置文件究竟怎么写？直接拷贝本项目目录sample子目录下的配置文件，然后将里面的配置信息改成实际的值即可。
+#### 2. 处理支付回调
+
+支付回调是支付宝或者微信在用户支付成功后，给商户服务器异步推送的支付通知，告知商户支付结果。商户应以支付结果为依据，正确的处理业务逻辑，同时
+按照支付宝和微信要求的回复格式进行应答。由于网络原因或者其他未知原因，支付通知**可能会多次推送**，商户应该能够正确处理。
+
+这里有几点需要注意：
+
+* 商户服务器应该能够正确的处理重复通知；
+* 应该按照支付宝和微信要求的格式正确应答；
+* 为了防止虚假支付通知，应该能够校验支付通知的真伪。
+
+为了屏蔽处理的复杂性，本项目同样提供了工具类让开发者专注于业务逻辑的开发：
+
+```java
+@RequestMapping("/pay/notify")
+@Controller
+@ResponseBody
+class NotifyController {
+    public String handleNotify(HttpServletRequest request) {
+        PayNotifyHandler h = NotifyHandlerFactory.getNotifyHandler(PayType.wx); // 如果是支付宝支付回调使用PayType.alipay
+        return h.handle(request, mchInfo, new PayNotifyCallback() {
+            void onPaySuccess(String outTradeNo, Map<String, String> notifyParas) {
+                // 这里处理支付成功的业务逻辑，能够进入这里也表明支付校验已经通过。
+            }
+            boolean isNotifyHandled() {
+                // 这里处理重复通知，如果已经处理过了，返回true，否则返回false。
+                // 如果这里返回了true，那么onPaySuccess不会执行。
+            }
+        });
+    }
+}
+```
 
 ## 使用说明
 
