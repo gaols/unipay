@@ -9,5 +9,5 @@ public interface PayNotifyCallback {
     /**
      * @return true if the notification has already handled, false otherwise.
      */
-    boolean isNotifyHandled();
+    boolean isNotifyHandled(String outTradeNo);
 }

@@ -10,7 +10,7 @@ public abstract class PayNotifyBaseHandler implements PayNotifyHandler {
         PayNotifyParser parser = getPayNotifyParser(request);
         Map<String, String> parasMap = parser.getNotifyParasMap();
         String outTradeNo = parasMap.get("out_trade_no");
-        if (callback.isNotifyHandled()) {
+        if (callback.isNotifyHandled(outTradeNo)) {
             return generateResult(true);
         }
 

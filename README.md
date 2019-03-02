@@ -71,7 +71,7 @@ class NotifyController {
             void onPaySuccess(String outTradeNo, Map<String, String> notifyParas) {
                 // 这里处理支付成功的业务逻辑，能够进入这里也表明支付校验已经通过。
             }
-            boolean isNotifyHandled() {
+            boolean isNotifyHandled(String outTradeNo) {
                 // 这里处理重复通知，如果已经处理过了，返回true，否则返回false。
                 // 如果这里返回了true，那么onPaySuccess不会执行。
             }

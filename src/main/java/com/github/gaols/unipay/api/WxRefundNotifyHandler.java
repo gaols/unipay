@@ -10,7 +10,7 @@ public class WxRefundNotifyHandler implements RefundNotifyHandler {
     public String handle(HttpServletRequest request, MchInfo mchInfo, RefundNotifyCallback callback) {
         WxRefundNotifyParser parser = new WxRefundNotifyParser(request, ((WxMchInfo) mchInfo).getMchKey());
         if (parser.isSuccess()) {
-            if (callback.isNotifyHandled()) {
+            if (callback.isNotifyHandled(parser.getOutRefundNo())) {
                 return WxNotifyResponse.success("OK");
             }
 
