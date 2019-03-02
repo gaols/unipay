@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.gaols.unipay</groupId>
+    <groupId>com.github.gaols</groupId>
     <artifactId>unipay</artifactId>
     <version>1.0-SNAPSHOT</version>
     <description>统一微信和支付宝支付接口，让支付更便捷！</description>
