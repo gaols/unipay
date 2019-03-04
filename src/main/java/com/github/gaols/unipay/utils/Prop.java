@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.Properties;
 
-/**
+/*
  * Prop. Prop can load properties file from CLASSPATH or File object.
  */
 public class Prop {

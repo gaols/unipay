@@ -2,7 +2,7 @@ package com.github.gaols.unipay.wxpay.adapter;
 
 import java.util.List;
 
-/**
+/*
  * 具体可以参考：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_102&index=2
  * 微信统一下单中的detail字段。如果要遵循规范，那么该字段应为json格式。
  */

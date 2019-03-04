@@ -17,27 +17,6 @@ import java.util.Map;
 
 /**
  * @author gaols
- * <p>
- * <code>
- * <xml><appid><![CDATA[wxbdb4f2a8c94df91a]]></appid>
- * <bank_type><![CDATA[CFT]]></bank_type>
- * <cash_fee><![CDATA[1]]></cash_fee>
- * <fee_type><![CDATA[CNY]]></fee_type>
- * <is_subscribe><![CDATA[Y]]></is_subscribe>
- * <mch_id><![CDATA[1425619202]]></mch_id>
- * <nonce_str><![CDATA[xxxx]]></nonce_str>
- * <openid><![CDATA[xxxx]]></openid>
- * <out_trade_no><![CDATA[xxxx]]></out_trade_no>
- * <result_code><![CDATA[SUCCESS]]></result_code>
- * <return_code><![CDATA[SUCCESS]]></return_code>
- * <sign><![CDATA[xxxxx]]></sign>
- * <time_end><![CDATA[20190227214432]]></time_end>
- * <total_fee>1</total_fee>
- * <trade_type><![CDATA[NATIVE]]></trade_type>
- * <transaction_id><![CDATA[4200000282201902277982404798]]></transaction_id>
- * </xml>
- * <p>
- * </code>
  */
 public class WxPayNotifyParser implements PayNotifyParser {
 

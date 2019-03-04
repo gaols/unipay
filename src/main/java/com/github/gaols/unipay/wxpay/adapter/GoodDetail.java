@@ -1,6 +1,6 @@
 package com.github.gaols.unipay.wxpay.adapter;
 
-/**
+/*
  * 具体可以参考：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_102&index=2
  * "goods_id": "商品编码",
  * "wxpay_goods_id": "1001",

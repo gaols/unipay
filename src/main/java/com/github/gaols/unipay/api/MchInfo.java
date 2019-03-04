@@ -8,6 +8,8 @@ public abstract class MchInfo {
 
     /**
      * 账号标识。
+     *
+     * @return identifier for an account.
      */
     public abstract String getId();
 
