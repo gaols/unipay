@@ -7,6 +7,7 @@
     <groupId>com.github.gaols.unipay</groupId>
     <artifactId>unipay-pc</artifactId>
     <version>1.0.0</version>
+    <name>unipay-pc</name>
     <description>统一微信和支付宝支付接口，让支付更便捷！</description>
     <url>https://github.com/gaols/unipay</url>
 
