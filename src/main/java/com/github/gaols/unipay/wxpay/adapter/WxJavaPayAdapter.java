@@ -15,7 +15,7 @@ import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.gaols.unipay.api.*;
 import com.github.gaols.unipay.core.PushOrderStatus;
 import com.github.gaols.unipay.core.TradeStatusTranslator;
-import com.github.gaols.unipay.wxpay.WxMchInfo;
+import com.github.gaols.unipay.wxpay.WxpayMchInfo;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -133,7 +133,7 @@ public class WxJavaPayAdapter implements UnipayService {
     }
 
     private WxPayService payService(MchInfo mchInfo) {
-        WxMchInfo info = (WxMchInfo) mchInfo;
+        WxpayMchInfo info = (WxpayMchInfo) mchInfo;
         WxPayConfig payConfig = new WxPayConfig();
         payConfig.setAppId(info.getAppId());
         payConfig.setMchId(info.getMchId());

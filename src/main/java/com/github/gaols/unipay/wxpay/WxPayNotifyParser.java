@@ -31,7 +31,7 @@ public class WxPayNotifyParser implements PayNotifyParser {
 
     @Override
     public boolean isSignValid(MchInfo mchInfo) {
-        WxMchInfo info = (WxMchInfo) mchInfo;
+        WxpayMchInfo info = (WxpayMchInfo) mchInfo;
         return WxVendor.getProxy().checkSign(this.parasMap, info.getSignType(), info.getMchKey());
     }
 

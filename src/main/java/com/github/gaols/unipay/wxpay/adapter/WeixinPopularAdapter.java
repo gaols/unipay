@@ -4,7 +4,7 @@ import com.github.gaols.unipay.api.*;
 import com.github.gaols.unipay.core.PushOrderStatus;
 import com.github.gaols.unipay.core.TradeStatusTranslator;
 import com.github.gaols.unipay.wxpay.NonceStr;
-import com.github.gaols.unipay.wxpay.WxMchInfo;
+import com.github.gaols.unipay.wxpay.WxpayMchInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weixin.popular.api.PayMchAPI;
@@ -28,7 +28,7 @@ public class WeixinPopularAdapter implements UnipayService {
 
     @Override
     public PushOrderResult unifyOrder(OrderContext context, Order order, MchInfo mchInfo) {
-        WxMchInfo info = (WxMchInfo) mchInfo;
+        WxpayMchInfo info = (WxpayMchInfo) mchInfo;
         Unifiedorder unifiedorder = new Unifiedorder();
         unifiedorder.setAppid(info.getAppId());
         unifiedorder.setMch_id(info.getMchId());
@@ -98,7 +98,7 @@ public class WeixinPopularAdapter implements UnipayService {
 
     @Override
     public TradeStatus queryOrderStatus(String outTradeNo, MchInfo mchInfo) {
-        WxMchInfo info = (WxMchInfo) mchInfo;
+        WxpayMchInfo info = (WxpayMchInfo) mchInfo;
         MchOrderquery query = new MchOrderquery();
         query.setOut_trade_no(outTradeNo);
         query.setAppid(info.getAppId());
@@ -116,7 +116,7 @@ public class WeixinPopularAdapter implements UnipayService {
      */
     @Override
     public void cancelOrder(String outTradeNo, MchInfo mchInfo) {
-        WxMchInfo info = (WxMchInfo) mchInfo;
+        WxpayMchInfo info = (WxpayMchInfo) mchInfo;
         Closeorder closeorder = new Closeorder();
         closeorder.setOut_trade_no(outTradeNo);
         closeorder.setAppid(info.getAppId());
@@ -133,7 +133,7 @@ public class WeixinPopularAdapter implements UnipayService {
 
     @Override
     public RefundResult refund(RefundRequest request, MchInfo mchInfo) {
-        WxMchInfo info = (WxMchInfo) mchInfo;
+        WxpayMchInfo info = (WxpayMchInfo) mchInfo;
         initKeyStore(info);
         SecapiPayRefund refund = new SecapiPayRefund();
         refund.setOut_refund_no(request.getOutRequestNo());
@@ -171,7 +171,7 @@ public class WeixinPopularAdapter implements UnipayService {
         return ret;
     }
 
-    private void initKeyStore(WxMchInfo info) {
+    private void initKeyStore(WxpayMchInfo info) {
         lock.lock();
         InputStream stream = null;
         try {

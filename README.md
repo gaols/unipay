@@ -1,9 +1,9 @@
-# 可能是最简单的扫码支付sdk
+# 扫码支付sdk
 
 网站需要同时接入支付宝扫码支付和微信扫码支付？微信支付和支付宝扫码支付接口不同，写起来有没有很坑？本sdk的目标是统一这两家的扫码
 支付接口，让接入变得简单。
 
-## 简单之道
+## 使用方法
 
 ### 支付宝支付
 
@@ -39,7 +39,7 @@ if (result.isOk()) {
 `MchInfo.create(...)`是为了简化配置而写的工具类，内部实现会根据支付方式的不同自动创建不同的账户配置实例：
 
 * 支付宝对应的[AlipayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/alipay/AlipayMchInfo.java)；
-* 微信对应的是[WxMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/wxpay/WxMchInfo.java)。
+* 微信对应的是[WxpayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/wxpay/WxpayMchInfo.java)。
 
 `MchInfo.create(...)`第二个参数是用来接收收款账户的配置信息。支付宝和微信需要的配置文件是不同，为了简便起见，推荐直接拷贝本项目目录下
 *sample*子目录下的配置文件，将里面的配置信息改成实际的值，放到项目的**src/main/resources**目录下。
@@ -80,7 +80,7 @@ class NotifyController {
 }
 ```
 
-## 使用说明
+## 依赖说明
 
 如果要支持支付宝支付，需要引入`alipay-sdk-java`。
 

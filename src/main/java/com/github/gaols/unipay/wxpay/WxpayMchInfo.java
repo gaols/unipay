@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 微信的公众号的商户信息。
  */
-public class WxMchInfo extends MchInfo {
+public class WxpayMchInfo extends MchInfo {
     private String mchKey;
     private String appId;
     private String mchId;

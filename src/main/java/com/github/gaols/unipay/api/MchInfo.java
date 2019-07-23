@@ -2,7 +2,7 @@ package com.github.gaols.unipay.api;
 
 import com.github.gaols.unipay.alipay.AlipayMchInfo;
 import com.github.gaols.unipay.utils.Prop;
-import com.github.gaols.unipay.wxpay.WxMchInfo;
+import com.github.gaols.unipay.wxpay.WxpayMchInfo;
 
 public abstract class MchInfo {
 
@@ -22,7 +22,7 @@ public abstract class MchInfo {
         Prop prop = new Prop(filename);
         switch (payType) {
             case wx:
-                WxMchInfo wxMchInfo = new WxMchInfo();
+                WxpayMchInfo wxMchInfo = new WxpayMchInfo();
                 wxMchInfo.setAppId(prop.get("app_id"));
                 wxMchInfo.setMchKey(prop.get("mch_key")); // api key
                 wxMchInfo.setMchId(prop.get("mch_id"));
