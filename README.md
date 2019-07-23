@@ -106,13 +106,13 @@ class NotifyController {
 <dependency>
     <groupId>com.github.liyiorg</groupId>
     <artifactId>weixin-popular</artifactId>
-    <version>2.8.10</version>
+    <version>2.8.27</version>
 </dependency>
 
 <!-- 或者 -->
 <dependency>
     <groupId>com.github.binarywang</groupId>
     <artifactId>weixin-java-pay</artifactId>
-    <version>3.2.0</version>
+    <version>3.4.0</version>
 </dependency>
 ```
