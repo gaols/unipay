@@ -5,7 +5,17 @@
 
 ## 使用方法
 
-### 支付宝支付
+### 引入依赖
+
+```xml
+<dependency>
+    <groupId>com.github.gaols.unipay</groupId>
+    <artifactId>unipay-pc</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### 代码示例
 
 ```java
 UnipayService service = UniPayServiceFactory.getUnipayService(PayType.alipay); // 微信支付使用PayType.wx
@@ -38,8 +48,8 @@ if (result.isOk()) {
 
 `MchInfo.create(...)`是为了简化配置而写的工具类，内部实现会根据支付方式的不同自动创建不同的账户配置实例：
 
-* 支付宝对应的[AlipayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/alipay/AlipayMchInfo.java)；
-* 微信对应的是[WxpayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/wxpay/WxpayMchInfo.java)。
+* 支付宝对应的是：[AlipayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/alipay/AlipayMchInfo.java)；
+* 微信对应的是：[WxpayMchInfo](https://github.com/gaols/unipay/blob/master/src/main/java/com/github/gaols/unipay/wxpay/WxpayMchInfo.java)。
 
 `MchInfo.create(...)`第二个参数是用来接收收款账户的配置信息。支付宝和微信需要的配置文件是不同，为了简便起见，推荐直接拷贝本项目目录下
 *sample*子目录下的配置文件，将里面的配置信息改成实际的值，放到项目的**src/main/resources**目录下。

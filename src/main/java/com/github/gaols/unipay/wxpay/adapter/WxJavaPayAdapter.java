@@ -111,7 +111,7 @@ public class WxJavaPayAdapter implements UnipayService {
             ret.setFeeType(result.getFeeType());
             ret.setCashFee(result.getCashFee());
             ret.setCashFeeType(result.getCashFeeType());
-            ret.setCashRefundFee(result.getCashRefundFee());
+            ret.setCashRefundFee(result.getCashRefundFee().toString());
         } catch (WxPayException e) {
             ret.setTradeStatus(TradeStatus.UNKNOWN);
         }
