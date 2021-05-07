@@ -1,6 +1,8 @@
 package com.github.gaols.unipay.utils;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class IpUtils {
 
-    private static Logger logger = Logger.getLogger(IpUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(IpUtils.class);
 
     public static String getRealIp(HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");

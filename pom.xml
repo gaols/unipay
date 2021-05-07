@@ -14,9 +14,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sl4j-api.version>1.7.25</sl4j-api.version>
+        <sl4j-simple.version>1.7.25</sl4j-simple.version>
         <junit.version>4.13.1</junit.version>
-        <log4j.version>1.2.17</log4j.version>
-        <log4j-sl4j-adapter.version>1.7.21</log4j-sl4j-adapter.version>
         <servlet-api-version>2.5</servlet-api-version>
         <commmons-lang3-version>3.8.1</commmons-lang3-version>
         <alipay-sdk-java.version>3.6.0.ALL</alipay-sdk-java.version>
@@ -68,15 +67,10 @@
             <version>${sl4j-api.version}</version>
         </dependency>
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${log4j-sl4j-adapter.version}</version>
-            <scope>test</scope>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${sl4j-simple.version}</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
