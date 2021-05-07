@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.github.gaols.unipay</groupId>
     <artifactId>unipay-pc</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
