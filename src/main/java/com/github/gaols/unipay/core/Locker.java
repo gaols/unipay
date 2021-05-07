@@ -2,8 +2,8 @@ package com.github.gaols.unipay.core;
 
 public interface Locker {
 
-    void lock();
+    void lock(String name);
 
-    void release();
+    void release(String name);
 
 }
