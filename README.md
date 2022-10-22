@@ -1,3 +1,7 @@
+# 停止维护
+
+由于时间问题，本项目停止维护，如有需要可以使用 [isaltyfish 的 fork 版本：https://github.com/isaltyfish/unipay](https://github.com/isaltyfish/unipay)。
+
 # 扫码支付sdk
 
 网站需要同时接入支付宝扫码支付和微信扫码支付？微信支付和支付宝扫码支付接口不同，写起来有没有很坑？本sdk的目标是统一这两家的扫码
